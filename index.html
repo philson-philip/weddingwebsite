@@ -1039,26 +1039,38 @@
     /* ===== GIFTS (overlay on photo) ===== */
     .gifts-section { position: relative; overflow: hidden; }
     .gifts-section .gifts-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .gifts-inner { position: relative; z-index: 1; padding: 2.5rem 1.5rem; display: flex; justify-content: center; }
+    .gifts-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(249,247,242,0.35), rgba(249,247,242,0.08) 55%, rgba(0,0,0,0.06)); }
+    .gifts-inner { position: relative; z-index: 1; padding: 2.5rem 1rem; display: flex; justify-content: center; }
+    @media (min-width: 480px) { .gifts-inner { padding: 2.5rem 1.5rem; } }
     @media (min-width: 768px) { .gifts-inner { padding: 4rem; } }
     .gifts-card {
       background: #fff;
       border-radius: 0.5rem;
       border: 1px solid hsl(50 33% 24% / 0.2);
-      padding: 2.5rem;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      padding: 2.5rem 1.25rem;
+      box-shadow: 0 1px 3px rgba(61,74,56,0.06), 0 12px 40px rgba(61,74,56,0.12);
       text-align: center;
-      max-width: 40rem;
+      max-width: 42rem;
       width: 100%;
     }
+    @media (min-width: 480px) { .gifts-card { padding: 2.5rem; } }
     @media (min-width: 768px) { .gifts-card { padding: 3.5rem; } }
-    .gifts-title { font-family: "New Icon Script", cursive; font-size: 2.5rem; color: #3D4A38; margin-bottom: 1.5rem; }
-    @media (min-width: 768px) { .gifts-title { font-size: 4.5rem; } }
-    .gifts-text { font-family: "arek-armenian", serif; font-size: 1.3rem; line-height: 1.7; color: #4E5E47; font-style: italic; margin-bottom: 2rem; }
-    .bank-card { background: hsl(40 37% 96%); border-radius: 0.5rem; padding: 1.5rem; text-align: left; margin-bottom: 1rem; }
+    .gifts-title { font-family: "New Icon Script", cursive; font-size: 2.75rem; color: #3D4A38; margin-bottom: 1.5rem; }
+    @media (min-width: 768px) { .gifts-title { font-size: 3.5rem; } }
+    .gifts-message { margin-bottom: 2rem; }
+    .gifts-text { font-family: "arek-armenian", serif; font-size: 1.1rem; line-height: 1.55; color: #4E5E47; font-style: italic; margin-bottom: 1rem; }
+    @media (min-width: 768px) { .gifts-text { font-size: 1.25rem; line-height: 1.45; } }
+    .gifts-signoff { font-family: "arek-armenian", serif; font-size: 1.1rem; font-style: italic; color: #4E5E47; margin-top: 1.5rem; }
+    @media (min-width: 768px) { .gifts-signoff { font-size: 1.25rem; } }
+    .gifts-signoff-names { display: block; font-family: "New Icon Script", cursive; font-style: normal; font-size: 1.85rem; color: #3D4A38; line-height: 1.3; }
+    @media (min-width: 480px) { .gifts-signoff-names { font-size: 2.25rem; } }
+    .bank-card { background: hsl(40 37% 96%); border-radius: 0.5rem; padding: 1.25rem; text-align: left; margin-bottom: 1rem; }
+    @media (min-width: 480px) { .bank-card { padding: 1.5rem; } }
     .bank-card:last-child { margin-bottom: 0; }
     .bank-name { font-family: "arek-armenian", serif; font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; color: #3D4A38; font-weight: 500; margin-bottom: 0.75rem; }
-    .bank-details { font-family: "arek-armenian", serif; font-size: 1rem; color: #5C6E54; line-height: 1.6; white-space: pre-line; }
+    .bank-details { font-family: "arek-armenian", serif; font-size: 0.95rem; color: #5C6E54; line-height: 1.45; white-space: pre-line; }
+    @media (min-width: 480px) { .bank-details { font-size: 1rem; } }
+    .bank-details .nowrap { white-space: nowrap; }
 
     /* ===== RING TOSS GAME ===== */
     .game-section {
@@ -1905,6 +1917,7 @@
         <a class="site-nav-link" href="#venues" onclick="event.preventDefault();document.getElementById('venues').scrollIntoView({behavior:'smooth'})">Venues</a>
         <a class="site-nav-link" href="#accommodation" onclick="event.preventDefault();document.getElementById('accommodation').scrollIntoView({behavior:'smooth'})">Hotels</a>
         <a class="site-nav-link" href="#getting-here" onclick="event.preventDefault();document.getElementById('getting-here').scrollIntoView({behavior:'smooth'})">Getting Here</a>
+        <a class="site-nav-link" href="#gifts" onclick="event.preventDefault();document.getElementById('gifts').scrollIntoView({behavior:'smooth'})">Gifts</a>
         <a class="site-nav-link" href="#qa" onclick="event.preventDefault();document.getElementById('qa').scrollIntoView({behavior:'smooth'})">FAQ</a>
       </div>
       <a class="site-nav-rsvp" href="#rsvp" onclick="event.preventDefault();document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</a>
@@ -2452,6 +2465,30 @@
 
         </div>
 
+      </div>
+    </section>
+
+    <!-- ===== GIFTS SECTION ===== -->
+    <section class="gifts-section" id="gifts">
+      <img class="gifts-bg" src="assets/windsor-img.jpg" alt="" loading="lazy">
+      <div class="gifts-overlay"></div>
+      <div class="gifts-inner">
+        <div class="gifts-card fade-up">
+          <h2 class="gifts-title">Gifts</h2>
+          <div class="gifts-message">
+            <p class="gifts-text">Your presence at our wedding and your blessings as we begin married life together mean more to us than any gift.</p>
+            <p class="gifts-text">For those who have kindly asked about gifts, if you would like to give us something, we would be truly grateful for a contribution towards our future together.</p>
+            <p class="gifts-text">Please know that there is absolutely no expectation, celebrating with you is more than enough.</p>
+            <p class="gifts-signoff">With love,<span class="gifts-signoff-names">Larisa &amp; Shine</span></p>
+          </div>
+          <div class="bank-card">
+            <p class="bank-name">Bank of Scotland &ndash; Larisa Thomas</p>
+            <p class="bank-details">Sort Code: 80-48-26
+              Account Number: 10542364
+              IBAN: <span class="nowrap">GB42 BOFS 8048 2610 5423 64</span>
+              BIC / SWIFT: BOFSGBS1186</p>
+          </div>
+        </div>
       </div>
     </section>
 
