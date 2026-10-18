@@ -247,8 +247,6 @@
     }
     .bounce-arrow { animation: bounce-arrow 1.5s ease-in-out infinite; }
 
-    /* (intro is now the splash overlay at top of body) */
-
     /* ===== COUNTDOWN ===== */
     .countdown-section {
       padding: 3rem 1rem;
@@ -507,6 +505,11 @@
     .venue-detail-row .time-text {
       font-family: "New Icon Script", cursive;
       font-size: 1.5rem;
+    }
+    .venue-detail-row .date-text, .venue-detail-row .time-text { white-space: nowrap; }
+    @media (max-width: 479px) {
+      .venue-detail-row { flex-direction: column; gap: 0.1rem; }
+      .venue-detail-row .dot { display: none; }
     }
     .venue-separator {
       width: 3rem;
@@ -1037,9 +1040,25 @@
     }
 
     /* ===== GIFTS (overlay on photo) ===== */
-    .gifts-section { position: relative; overflow: hidden; }
-    .gifts-section .gifts-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .gifts-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(249,247,242,0.35), rgba(249,247,242,0.08) 55%, rgba(0,0,0,0.06)); }
+    .gifts-section {
+      position: relative;
+      overflow: hidden;
+      background-color: #D9DCD1;
+      background-image:
+        radial-gradient(ellipse 70% 55% at 50% 0%, hsl(40 37% 96% / 0.75), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(117,136,109,0.22), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 100% 100%, rgba(117,136,109,0.22), transparent 70%);
+    }
+    .gifts-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      background-size: 200px;
+      opacity: 0.07;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
     .gifts-inner { position: relative; z-index: 1; padding: 2.5rem 1rem; display: flex; justify-content: center; }
     @media (min-width: 480px) { .gifts-inner { padding: 2.5rem 1.5rem; } }
     @media (min-width: 768px) { .gifts-inner { padding: 4rem; } }
@@ -1068,6 +1087,7 @@
     @media (min-width: 480px) { .bank-card { padding: 1.5rem; } }
     .bank-card:last-child { margin-bottom: 0; }
     .bank-name { font-family: "arek-armenian", serif; font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; color: #3D4A38; font-weight: 500; margin-bottom: 0.75rem; }
+    .bank-holder { display: inline-block; }
     .bank-details { font-family: "arek-armenian", serif; font-size: 0.95rem; color: #5C6E54; line-height: 1.45; white-space: pre-line; }
     @media (min-width: 480px) { .bank-details { font-size: 1rem; } }
     .bank-details .nowrap { white-space: nowrap; }
@@ -1264,60 +1284,6 @@
     .music-toggle:focus-visible { outline: 2px solid #75886D; outline-offset: 2px; }
     .music-toggle:active { transform: scale(0.95); }
     .music-toggle svg { width: 20px; height: 20px; }
-
-    /* ===== SPLASH / ENVELOPE INTRO ===== */
-    .splash-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: #fff;
-      cursor: pointer;
-      transition: opacity 0.8s ease-in-out;
-    }
-    .splash-overlay.fading {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .splash-overlay.hidden {
-      display: none;
-    }
-    .splash-overlay img,
-    .splash-overlay video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .splash-poster { transition: opacity 50ms ease-out; }
-    .splash-video { transition: opacity 50ms ease-out; opacity: 0; }
-    .splash-video.show { opacity: 1; }
-    .splash-poster.hide { opacity: 0; }
-    .splash-tap-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      animation: splash-pulse 2s ease-in-out infinite;
-    }
-    .splash-tap-hint.visible { display: flex; }
-    .splash-tap-hint span {
-      font-family: "arek-armenian", serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(61,74,56,0.7);
-    }
-    .splash-tap-hint svg { opacity: 0.5; }
-    @keyframes splash-pulse {
-      0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-    }
 
     /* Gallery marquee second strip */
     .gallery-marquee-section {
@@ -1924,18 +1890,6 @@
     </div>
   </nav>
 
-  <!-- Splash / Envelope Intro Overlay -->
-  <div class="splash-overlay" id="splash-overlay">
-    <img src="assets/intro-img.png" alt="" class="splash-poster" id="splash-poster" draggable="false">
-    <video id="splash-video" class="splash-video" muted playsinline preload="auto" poster="assets/intro-img.png">
-      <source src="assets/intro-video.mp4" type="video/mp4">
-    </video>
-    <div class="splash-tap-hint" id="splash-tap-hint">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3D4A38" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      <span>Tap to open</span>
-    </div>
-  </div>
-
   <main class="bg-background">
 
     <!-- ===== HERO ===== -->
@@ -2107,8 +2061,8 @@
           <p class="venue-gold-subtitle">In the presence of God, we will celebrate both our engagement and wedding ceremonies here, each on its own special day.</p>
         </div>
         <div class="venue-card fade-up delay-1">
-          <img src="assets/div-33.png" alt="Knanaya Catholic Metropolitan Archbishop's House" class="venue-illustration" loading="lazy">
-          <h3 class="venue-name">Knanaya Catholic Metropolitan Archbishop's House</h3>
+          <img src="assets/div-33.png" alt="Christ the King Knanaya Catholic Metropolitan Cathedral" class="venue-illustration" loading="lazy">
+          <h3 class="venue-name">Christ the King Knanaya Catholic Metropolitan Cathedral</h3>
           <p class="venue-name-sub" style="font-family:'arek-armenian',serif; font-size:1.1rem; color:#75886D; margin-top:0.15rem; letter-spacing:0.04em;">Aramana Palli, Kottayam</p>
           <div class="venue-separator" style="margin:1rem auto;"></div>
           <div class="venue-detail-row">
@@ -2117,7 +2071,7 @@
           <div class="venue-detail-row" style="margin-top:0.15rem;">
             <span class="date-text">03 January 2027</span>
             <span class="dot">&middot;</span>
-            <span class="time-text" style="font-family:'arek-armenian',serif; font-size:1rem; font-style:italic;">4:00 PM</span>
+            <span class="time-text">4:00 PM</span>
           </div>
           <div class="venue-separator" style="margin:0.75rem auto;"></div>
           <div class="venue-detail-row">
@@ -2126,14 +2080,14 @@
           <div class="venue-detail-row" style="margin-top:0.15rem;">
             <span class="date-text">05 January 2027</span>
             <span class="dot">&middot;</span>
-            <span class="time-text" style="font-family:'arek-armenian',serif; font-size:1rem; font-style:italic;">2:45 PM</span>
+            <span class="time-text">2:45 PM</span>
           </div>
           <div class="venue-separator" style="margin:1rem auto;"></div>
           <p class="venue-address-sub">Kottayam, Kerala, India</p>
           <div class="venue-map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.5!2d76.5222!3d9.5916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b062ba16afda845%3A0x5c5e2389a2e7a042!2sKnanaya%20Catholic%20Metropolitan&#39;s%20House!5e0!3m2!1sen!2sin" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Knanaya Catholic Metropolitan Archbishop's House, Kottayam"></iframe>
+            <iframe src="https://maps.google.com/maps?q=Christ+the+King+Knanaya+Catholic+Metropolitan+Cathedral,+Kottayam&amp;z=16&amp;output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Christ the King Knanaya Catholic Metropolitan Cathedral, Kottayam"></iframe>
           </div>
-          <a href="https://maps.app.goo.gl/EW9FsNr5591n1a4t9" target="_blank" rel="noopener noreferrer" class="map-link">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Christ+the+King+Knanaya+Catholic+Metropolitan+Cathedral&amp;query_place_id=ChIJ9502pZ8rBjsRshHy76dfOZI" target="_blank" rel="noopener noreferrer" class="map-link">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             Open in Maps
           </a>
@@ -2470,8 +2424,6 @@
 
     <!-- ===== GIFTS SECTION ===== -->
     <section class="gifts-section" id="gifts">
-      <img class="gifts-bg" src="assets/windsor-img.jpg" alt="" loading="lazy">
-      <div class="gifts-overlay"></div>
       <div class="gifts-inner">
         <div class="gifts-card fade-up">
           <h2 class="gifts-title">Gifts</h2>
@@ -2482,11 +2434,16 @@
             <p class="gifts-signoff">With love,<span class="gifts-signoff-names">Larisa &amp; Shine</span></p>
           </div>
           <div class="bank-card">
-            <p class="bank-name">Bank of Scotland &ndash; Larisa Thomas</p>
+            <p class="bank-name">Bank of Scotland &ndash; <span class="bank-holder">Larisa Thomas</span></p>
             <p class="bank-details">Sort Code: 80-48-26
               Account Number: 10542364
               IBAN: <span class="nowrap">GB42 BOFS 8048 2610 5423 64</span>
               BIC / SWIFT: BOFSGBS1186</p>
+          </div>
+          <div class="bank-card">
+            <p class="bank-name">Mashreq Bank &ndash; <span class="bank-holder">Shine Abraham Thomas Abraham</span></p>
+            <p class="bank-details">Account Number: 019100833635
+              IBAN: <span class="nowrap">AE05 0330 0000 1910 0833 635</span></p>
           </div>
         </div>
       </div>
@@ -2729,78 +2686,12 @@
       if (attendingNo)  attendingNo.addEventListener('change', updateAttending);
     })();
 
-    // Music elements (declared early so splash can use them)
+    // Music elements
     var music = document.getElementById('bg-music');
     var musicToggle = document.getElementById('music-toggle');
     var iconOff = document.getElementById('music-icon-off');
     var iconOn = document.getElementById('music-icon-on');
     var isPlaying = false;
-
-    // ===== SPLASH / ENVELOPE INTRO =====
-    (function() {
-      var splash = document.getElementById('splash-overlay');
-      var splashVideo = document.getElementById('splash-video');
-      var splashPoster = document.getElementById('splash-poster');
-      var tapHint = document.getElementById('splash-tap-hint');
-      var splashState = 'idle'; // idle -> playing -> fading -> done
-      var videoStarted = false;
-
-      function startVideo() {
-        if (splashState !== 'idle') return;
-        splashState = 'playing';
-        if (tapHint) tapHint.classList.remove('visible');
-        var p = splashVideo.play();
-        if (p && typeof p.catch === 'function') p.catch(function(){});
-      }
-
-      // Attempt autoplay immediately (allowed for muted videos in all modern browsers)
-      var autoplayPromise = splashVideo.play();
-      if (autoplayPromise !== undefined) {
-        autoplayPromise.then(function() {
-          // Autoplay succeeded — video is playing
-          splashState = 'playing';
-        }).catch(function() {
-          // Autoplay blocked — show the tap hint
-          splashVideo.pause();
-          splashState = 'idle';
-          if (tapHint) tapHint.classList.add('visible');
-        });
-      }
-
-      // Click anywhere on splash as fallback / for autoplay-blocked browsers
-      splash.addEventListener('click', function() { startVideo(); });
-
-      // As video plays, swap poster for video, then fade out near end
-      splashVideo.addEventListener('timeupdate', function() {
-        // Show video once it's actually playing
-        if (splashVideo.currentTime > 0.05 && !videoStarted) {
-          videoStarted = true;
-          splashVideo.classList.add('show');
-          splashPoster.classList.add('hide');
-        }
-        // When near end, fade out the splash overlay
-        if (splashVideo.duration - splashVideo.currentTime <= 0.8 && splashState === 'playing') {
-          splashState = 'fading';
-          splash.classList.add('fading');
-          setTimeout(function() {
-            splashState = 'done';
-            splash.classList.add('hidden');
-          }, 800);
-        }
-      });
-
-      // Fallback: if video ends naturally
-      splashVideo.addEventListener('ended', function() {
-        if (splashState !== 'done') {
-          splashState = 'fading';
-          splash.classList.add('fading');
-          setTimeout(function() {
-            splashState = 'done';
-            splash.classList.add('hidden');
-          }, 800);
-        }
-      });
-    })();
 
     // Music toggle
     musicToggle.addEventListener('click', function() {
