@@ -1784,6 +1784,17 @@
       margin: 1.5rem;
       width: calc(100% - 3rem);
     }
+    .dress-palette-link {
+      display: block;
+      margin-top: 1.25rem;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .dress-palette-link:hover { opacity: 0.9; }
+    .dress-palette-link:focus-visible { outline: 2px solid #3D4A38; outline-offset: 4px; }
+    .dress-palette-link:active { opacity: 0.8; }
+    .dress-palette-link img { display: block; width: 100%; height: auto; }
     .dress-day-label {
       font-family: "arek-armenian", serif;
       font-size: 0.68rem;
@@ -2216,7 +2227,10 @@
             <div class="dress-combined-overlay"></div>
             <div class="dress-combined-content">
               <h3 style="font-family:'New Icon Script',cursive;font-size:2rem;color:#3D4A38;margin-bottom:0.75rem;line-height:1.2;">Day 1 Events</h3>
-              <p style="font-family:'arek-armenian',serif;font-size:0.9rem;color:#5C6E54;line-height:1.65;">The colour scheme and dress code for this event will be updated closer to the time &mdash; please check back here for details.</p>
+              <p style="font-family:'arek-armenian',serif;font-size:0.9rem;color:#5C6E54;line-height:1.65;">We’d love for our guests to embrace traditional Indian attire, with a little colour inspiration from our palette below.</p>
+              <a class="dress-palette-link" href="assets/day-1-colour-palette.jpg" target="_blank" rel="noopener noreferrer" aria-label="View Day 1 colour palette full size (opens in a new tab)">
+                <img src="assets/day-1-colour-palette.jpg" alt="Day 1 colour palette: ivory, cream, champagne, gold, copper, and rust orange." width="2048" height="683" loading="lazy">
+              </a>
             </div>
           </div>
           <div class="dress-combined-card fade-up delay-1">
